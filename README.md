@@ -113,6 +113,5 @@ A aplicação sobe em `http://localhost:8080`.
 
 ## Observações
 
-- Todos os nomes de classes, métodos, endpoints e variáveis estão em português, conforme solicitado.
 - O Lombok está incluso no `pom.xml` como dependência opcional (não é usado nas entidades principais para manter o código explícito e didático, mas pode ser adotado livremente).
 - O tratamento de erros retorna respostas JSON padronizadas na API (`ManipuladorGlobalDeExcecoes`) e páginas amigáveis no frontend (`ManipuladorWebDeExcecoes`).
