@@ -1,0 +1,18 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head th:replace="~{fragmentos/layout :: cabecalho('Erro')}"></head>
+<body>
+
+<nav th:replace="~{fragmentos/layout :: menu}"></nav>
+
+<main class="container">
+    <div class="alert alert-danger text-center">
+        <h4 class="alert-heading">Ocorreu um erro</h4>
+        <p th:text="${mensagemErro}">Mensagem de erro</p>
+        <a class="btn btn-outline-danger mt-2" th:href="@{/codigospenais}">Voltar para a listagem</a>
+    </div>
+</main>
+
+<footer th:replace="~{fragmentos/layout :: rodape}"></footer>
+</body>
+</html>

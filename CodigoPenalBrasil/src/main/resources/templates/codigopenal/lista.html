@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head th:replace="~{fragmentos/layout :: cabecalho('Listagem de Artigos')}"></head>
+<body>
+
+<nav th:replace="~{fragmentos/layout :: menu}"></nav>
+
+<main class="container">
+
+    <div class="d-flex flex-wrap justify-content-between align-items-center mb-4 gap-2">
+        <h2 class="mb-0">Artigos do Código Penal</h2>
+        <a class="btn btn-primary" th:href="@{/codigospenais/novo}">+ Novo Artigo</a>
+    </div>
+
+    <div th:if="${mensagemSucesso}" class="alert alert-success alert-dismissible fade show" role="alert">
+        <span th:text="${mensagemSucesso}"></span>
+        <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+    </div>
+    <div th:if="${mensagemErro}" class="alert alert-danger alert-dismissible fade show" role="alert">
+        <span th:text="${mensagemErro}"></span>
+        <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+    </div>
+
+    <form th:action="@{/codigospenais}" method="get" class="row g-2 mb-4">
+        <div class="col-12 col-md-5">
+            <input type="text" class="form-control" name="termo" placeholder="Pesquisar por artigo ou descrição..."
+                   th:value="${termo}"/>
+        </div>
+        <div class="col-12 col-md-5">
+            <input type="text" class="form-control" name="tipoLei" placeholder="Pesquisar por tipo de lei..."
+                   th:value="${tipoLei}"/>
+        </div>
+        <div class="col-12 col-md-2 d-grid">
+            <button type="submit" class="btn btn-outline-primary">Pesquisar</button>
+        </div>
+    </form>
+
+    <p class="text-muted" th:if="${#lists.isEmpty(listaCodigosPenais)}">Nenhum registro encontrado.</p>
+
+    <div class="table-responsive" th:if="${not #lists.isEmpty(listaCodigosPenais)}">
+        <table class="table table-hover align-middle tabela-artigos">
+            <thead>
+                <tr>
+                    <th scope="col">Artigo</th>
+                    <th scope="col">Tipo de Lei</th>
+                    <th scope="col" class="text-end">Ações</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr th:each="item : ${listaCodigosPenais}">
+                    <td th:text="${item.artigo}">Art. 121</td>
+                    <td>
+                        <span class="badge badge-tipo-lei" th:if="${item.tipoLei}" th:text="${item.tipoLei}">Lei</span>
+                    </td>
+                    <td class="text-end">
+                        <div class="d-flex gap-2 justify-content-end flex-wrap">
+                            <a class="btn btn-sm btn-outline-secondary" th:href="@{/codigospenais/{id}(id=${item.id})}">Detalhes</a>
+                            <a class="btn btn-sm btn-outline-primary" th:href="@{/codigospenais/{id}/editar(id=${item.id})}">Editar</a>
+                            <form th:action="@{/codigospenais/{id}/excluir(id=${item.id})}" method="post"
+                                  onsubmit="return confirm('Confirma a exclusão deste artigo?');" class="d-inline">
+                                <button type="submit" class="btn btn-sm btn-outline-danger">Excluir</button>
+                            </form>
+                        </div>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+
+</main>
+
+<footer th:replace="~{fragmentos/layout :: rodape}"></footer>
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>
